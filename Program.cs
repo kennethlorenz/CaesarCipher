@@ -15,12 +15,24 @@ namespace CaesarCipher
                 return c;
             }
 
-            return c;
+
+            return (char)(c+key);
         }
+
+
         static void Main(string[] args)
         {
             Console.WriteLine("Enter a string to encrypt: ");
             string stringToEncrypt = Console.ReadLine();
+
+            string output = string.Empty;
+
+            foreach(char c in stringToEncrypt)
+            {
+                output += charToEncrypt(c, 1);
+            }
+
+            Console.WriteLine($"{output}");
 
         }
     }
