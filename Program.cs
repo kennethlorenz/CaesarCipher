@@ -31,6 +31,21 @@ namespace CaesarCipher
         }
 
 
+        //this method allows us to decrypt the encrypted message/input
+        //basically the vice versa of the above method (CharToEncrypt)
+        public static char CharToDecrypt(char c, int key)
+        {
+            if (char.IsLetter(c))
+            {
+                return (char)(c - (key % 26));
+            }
+
+            return c;
+
+        }
+
+
+
         //this method encrypts the input and combines every single character in one whole string.
         public static string Encrypt(string stringToEncrypt, int key)
         {
@@ -49,21 +64,30 @@ namespace CaesarCipher
         //this method decrypts the encrypted message
         public static string Decrypt(string stringToDecrypt, int key)
         {
+            string output = string.Empty;
 
+            foreach(char c in stringToDecrypt)
+            {
+                output += CharToDecrypt(c, key);
+            }
+
+            return output;
         }
 
 
         static void Main(string[] args)
         {
             Console.Write("Enter a string to encrypt: ");
-            string stringToEncrypt = Console.ReadLine();
+            string input = Console.ReadLine();
 
             Console.Write("Enter key: ");
             int key = int.Parse(Console.ReadLine());
 
-            string encryptedMessage = Encrypt(stringToEncrypt, key);
-
+            string encryptedMessage = Encrypt(input, key);
             Console.WriteLine($"Encrypted Message: {encryptedMessage}");
+
+            string decryptedMessage = Decrypt(encryptedMessage, key);
+            Console.WriteLine($"Decrypted Message: {decryptedMessage}");
 
 
 
