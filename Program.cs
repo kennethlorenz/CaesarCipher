@@ -25,23 +25,12 @@ namespace CaesarCipher
             }
 
 
+            //initialize a new char value only with letter(A) based on the case of the given char (uppercase/lowercase)
+            char a = char.IsUpper(c) ? 'A' : 'a';
+
             //we use the modulus operator to get the remainder of the key
             //caesar cipher is from 0-25, so if the user enters 26 as the key, the designated output resets respectively.
-            return (char)(c + (key % 26));
-        }
-
-
-        //this method allows us to decrypt the encrypted message/input
-        //basically the vice versa of the above method (CharToEncrypt)
-        public static char CharToDecrypt(char c, int key)
-        {
-            if (char.IsLetter(c))
-            {
-                return (char)(c - (key % 26));
-            }
-
-            return c;
-
+            return (char)((((c + key) - a) % 26) + a);
         }
 
 
@@ -64,14 +53,9 @@ namespace CaesarCipher
         //this method decrypts the encrypted message
         public static string Decrypt(string stringToDecrypt, int key)
         {
-            string output = string.Empty;
-
-            foreach(char c in stringToDecrypt)
-            {
-                output += CharToDecrypt(c, key);
-            }
-
-            return output;
+            //since we already know the key, we can use it to deduct to the total number of letters in the alphabet
+            //and use the encrypt method.
+            return Encrypt(stringToDecrypt, 26 - key);
         }
 
 
@@ -88,8 +72,6 @@ namespace CaesarCipher
 
             string decryptedMessage = Decrypt(encryptedMessage, key);
             Console.WriteLine($"Decrypted Message: {decryptedMessage}");
-
-
 
         }
     }
